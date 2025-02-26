@@ -23,5 +23,14 @@ class TestCardAPI(unittest.TestCase):
         self.assertIn('imageFront', response_data)
         self.assertIn('imageBack', response_data)
 
+    def test_get_cards(self):
+        url = 'http://127.0.0.1:5000/cards'
+        
+        response = requests.get(url)
+        
+        self.assertEqual(response.status_code, 200)
+        response_data = response.json()
+        self.assertIsInstance(response_data, list)
+
 if __name__ == '__main__':
     unittest.main()
