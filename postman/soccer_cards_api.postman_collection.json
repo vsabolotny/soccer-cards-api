@@ -1,0 +1,172 @@
+{
+	"info": {
+		"_postman_id": "2af82cc2-5507-46e4-9213-75b8d8b78241",
+		"name": "Soccer Cards API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "45544394",
+		"_collection_link": "https://vladislav-9795007.postman.co/workspace/Vladislav's-Workspace~d1bce327-db2d-4c13-84b3-5b0fd7f5d67e/collection/45544394-2af82cc2-5507-46e4-9213-75b8d8b78241?action=share&source=collection_link&creator=45544394"
+	},
+	"item": [
+		{
+			"name": "Get All Cards",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/cards?playerName=Cristiano Ronaldo&date=2022",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"cards"
+					],
+					"query": [
+						{
+							"key": "playerName",
+							"value": "Cristiano Ronaldo",
+							"description": "Filter by player name (example)"
+						},
+						{
+							"key": "date",
+							"value": "2022",
+							"description": "Filter by date (example)"
+						}
+					]
+				},
+				"description": "Retrieve all saved cards, optionally with filters."
+			},
+			"response": []
+		},
+		{
+			"name": "Add New Card",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "playerName",
+							"value": "Cristiano Ronaldo",
+							"description": "Name of the player",
+							"type": "text"
+						},
+						{
+							"key": "cardYear",
+							"value": "2022",
+							"description": "Year of the card",
+							"type": "text"
+						},
+						{
+							"key": "team",
+							"value": "Manchester United",
+							"description": "Player's team",
+							"type": "text"
+						},
+						{
+							"key": "imageFront",
+							"description": "Front image of the card",
+							"type": "file",
+							"src": "postman-cloud:///1f03fda5-3023-4780-8c02-621182127168"
+						},
+						{
+							"key": "imageBack",
+							"description": "Back image of the card",
+							"type": "file",
+							"src": "postman-cloud:///1f03fda5-52ae-43e0-9c8f-cf6001ab7fa7"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{baseUrl}}/api/cards",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"cards"
+					]
+				},
+				"description": "Add a new soccer card with front and back images."
+			},
+			"response": []
+		},
+		{
+			"name": "Get Card By ID",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/api/cards/2",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"api",
+						"cards",
+						"2"
+					]
+				},
+				"description": "Retrieve a specific card by its ID."
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Card By ID",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://{{baseUrl}}/cards/1",
+					"protocol": "http",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"cards",
+						"1"
+					],
+					"variable": [
+						{
+							"key": "card_id",
+							"value": "1",
+							"description": "ID of the card to delete"
+						}
+					]
+				},
+				"description": "Delete a specific card by its ID."
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://127.0.0.1:5000",
+			"type": "string"
+		}
+	]
+}

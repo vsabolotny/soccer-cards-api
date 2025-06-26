@@ -1,0 +1,137 @@
+{
+	"info": {
+		"_postman_id": "a3f3e44a-d595-407e-a0e7-0d58b944d885",
+		"name": "Soccer Cards Auth API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "45544394",
+		"_collection_link": "https://vladislav-9795007.postman.co/workspace/Vladislav's-Workspace~d1bce327-db2d-4c13-84b3-5b0fd7f5d67e/collection/45544394-a3f3e44a-d595-407e-a0e7-0d58b944d885?action=share&source=collection_link&creator=45544394"
+	},
+	"item": [
+		{
+			"name": "Register User",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"testuser@example.com\",\n    \"password\": \"password123\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/register",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"register"
+					]
+				},
+				"description": "Register a new user."
+			},
+			"response": []
+		},
+		{
+			"name": "Login User",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"testuser@example.com\",\n    \"password\": \"password123\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}/login",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"login"
+					]
+				},
+				"description": "Login an existing user to get an access token."
+			},
+			"response": []
+		},
+		{
+			"name": "Protected Route",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc0ODg5NDc4NywianRpIjoiMWMyNDlkNjAtNDE4ZS00NzBiLWIwNzQtNDc1OWZiY2ZmNDkyIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IjEiLCJuYmYiOjE3NDg4OTQ3ODcsImNzcmYiOiIyYTJmMGI3OS1mNzk3LTQ0OTktYTZlMS01YTcwOGFhZDFmZTUiLCJleHAiOjE3NDg4OTU2ODd9.YQ_D0C6ieogqcl78HihEMzLINAdoVB9NdkRvBnQdtRs",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{baseUrl}}/auth/protected",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"auth",
+						"protected"
+					]
+				},
+				"description": "Access a protected route. Requires a JWT access token in the Authorization header (Bearer token)."
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "test",
+			"script": {
+				"exec": [
+					"pm.test(\"Status code is 200 or 201 for successful auth operations\", function () {",
+					"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+					"});",
+					"",
+					"// Example: Capture access token from login response and set it as a collection variable",
+					"if (pm.request.url.getPath() === '/login' && pm.response.code === 200) {",
+					"    try {",
+					"        const responseJson = pm.response.json();",
+					"        if (responseJson.access_token) {",
+					"            pm.collectionVariables.set(\"accessToken\", responseJson.access_token);",
+					"            console.log('Access token captured:', responseJson.access_token);",
+					"        }",
+					"    } catch (e) {",
+					"        console.log('Error parsing login response or finding token:', e);",
+					"    }",
+					"}"
+				],
+				"type": "text/javascript"
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "http://127.0.0.1:5000",
+			"type": "string"
+		},
+		{
+			"key": "accessToken",
+			"value": ""
+		}
+	]
+}
