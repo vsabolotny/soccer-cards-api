@@ -1,7 +1,6 @@
 from flask import jsonify
 from ..models.card import Card
-from .. import db  # Assuming db is initialized in app/__init__.py
-print(f"ID of db in card_service.py (after import): {id(db)}")  # DIAGNOSTIC
+from .. import db  # db is initialized in app/__init__.py
 import os
 from werkzeug.utils import secure_filename
 
@@ -23,7 +22,6 @@ class CardService:
         self.cards = []
 
     def add_card(self, data, image_front, image_back):
-        print(f"ID of db in card_service.add_card (at method start): {id(db)}")  # DIAGNOSTIC
         player_name = data.get('playerName')
         card_year = data.get('cardYear')
         team = data.get('team')
