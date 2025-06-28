@@ -17,7 +17,6 @@ def create_app(config_name='default'):
     # This needs to be done after app.config is populated.
     if not os.path.exists(app.config['UPLOAD_FOLDER']):
         os.makedirs(app.config['UPLOAD_FOLDER'])
-        print(f"Created upload folder: {app.config['UPLOAD_FOLDER']}")
 
     # For testing, UPLOAD_FOLDER is also in TestingConfig. 
     # If tests create files, this folder should exist.
@@ -25,9 +24,8 @@ def create_app(config_name='default'):
     # might be more robust if tests run in parallel or specific test setup is needed.
     # However, creating it here if in 'testing' mode is also an option.
     if config_name == 'testing':
-        if not os.path.exists(app.config['UPLOAD_FOLDER']): # Which is TestingConfig.UPLOAD_FOLDER
+        if not os.path.exists(app.config['UPLOAD_FOLDER']):
              os.makedirs(app.config['UPLOAD_FOLDER'])
-             print(f"Created testing upload folder: {app.config['UPLOAD_FOLDER']}")
 
 
     db.init_app(app)
@@ -45,8 +43,7 @@ def create_app(config_name='default'):
         with app.app_context(): # Ensure we are within an app context for db operations
             try:
                 db.create_all()
-                print(f"Database tables created (if they didn't exist) for URI: {app.config['SQLALCHEMY_DATABASE_URI']}")
             except Exception as e:
-                print(f"Error during db.create_all(): {e}")
+                pass
     
     return app
