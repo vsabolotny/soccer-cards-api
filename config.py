@@ -10,7 +10,11 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 print(f"basedir: {basedir}")
 
 # Ensure the database directory exists
-db_dir = os.path.join(basedir)
+# db_dir = os.path.join(basedir)
+# if not os.path.exists(db_dir):
+    # os.makedirs(db_dir)
+
+db_dir = os.path.dirname(basedir)
 if not os.path.exists(db_dir):
     os.makedirs(db_dir)
 

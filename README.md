@@ -1,78 +1,92 @@
-# Soccer Cards App Backend
+# Soccer Cards API
 
-This project is a backend application for managing soccer cards, built using Flask. It provides functionalities for user authentication, card scanning, saving, and displaying a list of saved cards with filtering options.
+This is a Flask-based API for managing soccer cards and user authentication.
 
-## Features
+## File Structure
 
-- User authentication (login and registration)
-- Upload and save soccer card images
-- Retrieve and display a list of saved soccer cards
-- Filter cards by date and player name
+soccer-cards-api/ ├── app/ │ ├── models/ │ │ ├── card.py │ │ ├── user.py │ ├── services/ │ │ ├── card_service.py │ │ ├── auth_service.py │ ├── routes/ │ │ ├── cards.py │ │ ├── auth.py ├── config.py ├── run.py ├── requirements.txt ├── .env ├── README.md
 
-## Project Structure
-
-```
-backend/
-├── app/
-│   ├── __init__.py          # Initializes the Flask app instance
-│   ├── routes/               # Contains route definitions
-│   │   ├── __init__.py      # Initializes the routes module
-│   │   ├── auth.py          # Authentication routes
-│   │   └── cards.py         # Card management routes
-│   ├── models/               # Contains data models
-│   │   ├── __init__.py      # Initializes the models module
-│   │   ├── user.py          # User model definition
-│   │   └── card.py          # Card model definition
-│   ├── services/             # Contains business logic
-│   │   ├── __init__.py      # Initializes the services module
-│   │   ├── auth_service.py   # User authentication logic
-│   │   └── card_service.py    # Card data handling logic
-│   └── static/               # Directory for static files (e.g., images)
-├── run.py                    # Entry point for running the application
-├── config.py                 # Configuration settings
-├── requirements.txt          # Python dependencies
-└── README.md                 # Documentation for the backend
-```
-
-## Installation
+## Setup Instructions
 
 1. Clone the repository:
-   ```
+   ```bash
    git clone <repository-url>
-   cd soccer-cards-app/backend
+   cd soccer-cards-api
    ```
-
 2. Create a virtual environment:
    ```
    python -m venv venv
-   source venv/bin/activate  # On Windows use `venv\Scripts\activate`
+   source venv/bin/activate
    ```
-
 3. Install the required packages:
    ```
    pip install -r requirements.txt
    ```
-
+4. Configure environment variables: Create a .env file in the root directory and add the following:
+  ```
+  SECRET_KEY=you_should_change_this
+  DATABASE_URL=sqlite:///backend/soccer_cards_app.db
+  JWT_SECRET_KEY=you_should_change_this
+  TEST_JWT_SECRET_KEY=test_jwt_secret_key
+  ``` 
 ## Running the Application
-
 To run the backend application, execute the following command:
 ```
 python run.py
 ```
-
-The application will start on `http://127.0.0.1:5000/`.
+The application will start on http://127.0.0.1:5000/.
 
 ## API Endpoints
+### Cards Endpoints
+1. Get All Cards
+URL: /cards
+Method: GET
+Description: Retrieve all cards with optional filters.
+Parameters: Query parameters for filtering cards.
+Response: JSON list of cards.
 
-- `POST /auth/login`: User login
-- `POST /auth/register`: User registration
-- `GET /cards`: Retrieve all saved cards
-- `POST /cards`: Add a new soccer card
+2. Add a Card
+URL: /cards
+Method: POST
+Description: Add a new card.
+Body: Form data with imageFront, imageBack, and card details.
+Response: JSON object of the created card.
 
-## Contributing
+3. Get a Card by ID
+URL: /cards/<int:card_id>
+Method: GET
+Description: Retrieve a card by its ID.
+Response: JSON object of the card or a 404 error.
 
-Contributions are welcome! Please open an issue or submit a pull request for any improvements or bug fixes.
+4. Delete a Card
+URL: /cards/<int:card_id>
+Method: DELETE
+Description: Delete a card by its ID.
+Response: 204 status for success or 404 error.
 
-## License
+### Auth Endpoints
 
-This project is licensed under the MIT License. See the LICENSE file for details.
+1. Login
+URL: /login
+Method: POST
+Description: Authenticate a user and return a JWT access token.
+Body: JSON with email and password.
+Response: JSON object with access_token or a 401 error.
+
+2. Register
+URL: /register
+Method: POST
+Description: Register a new user.
+Body: JSON with email and password.
+Response: 201 status for success or 400 error.
+
+3. Protected Route
+URL: /protected
+Method: GET
+Description: Access a protected route (requires JWT token).
+Response: JSON message confirming access.
+
+## Notes
+Ensure the .env file is properly configured before running the application.
+Use tools like Postman or curl to test the API endpoints.
+For development, the application runs in debug mode. Disable debug mode in production by setting debug=False in run.py.
